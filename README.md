@@ -5,7 +5,7 @@ Markit is a Spring Boot project that shows how to connect a Java app to a MySQL 
 ## What’s done so far
 - Set up with Spring Boot and Maven
 - Connected to a MySQL database using JPA
-- Used Thymeleaf to build the frontend pages
+- Fetched tasks from the database and displayed them on a webpage using Thymeleaf
 
 ## Technologies
 - Spring Boot
