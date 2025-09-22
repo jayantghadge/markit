@@ -34,3 +34,6 @@ build/
 
 ### Ignore environment variable file ###
 .env
+
+### Node ###
+/src/main/resources/node_modules/
