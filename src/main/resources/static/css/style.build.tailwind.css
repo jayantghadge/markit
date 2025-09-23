@@ -7,7 +7,7 @@
     --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
       "Courier New", monospace;
     --color-red-500: oklch(63.7% 0.237 25.331);
-    --color-blue-500: oklch(62.3% 0.214 259.815);
+    --color-yellow-500: oklch(79.5% 0.184 86.047);
     --default-font-family: var(--font-sans);
     --default-mono-font-family: var(--font-mono);
   }
@@ -161,10 +161,10 @@
   }
 }
 @layer utilities {
-  .bg-blue-500 {
-    background-color: var(--color-blue-500);
-  }
   .bg-red-500 {
     background-color: var(--color-red-500);
+  }
+  .bg-yellow-500 {
+    background-color: var(--color-yellow-500);
   }
 }
