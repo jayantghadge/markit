@@ -5,22 +5,36 @@
   <meta charset="UTF-8">
   <title>MarkIt</title>
 </head>
-<body class="bg-blue-500">
-      <h1>MarkIt </h1>
-<div>
-  <form action="/" method="post">
-    <div>
-      <input type="text" name="title" placeholder="add a new task" required>
-    </div>
-    <div>
-      <button type="submit">Add</button>
-    </div>
+<body class="bg-gradient-to-r from-blue-500 to-indigo-600 min-h-screen flex items-center justify-center font-sans">
+<div class="bg-white shadow-xl rounded-2xl p-8 w-full max-w-md">
+  <!-- Title -->
+  <h1 class="text-3xl font-bold text-gray-800 mb-6 text-center">MarkIt</h1>
+
+  <!-- Form -->
+  <form action="/" method="post" class="flex space-x-2 mb-6">
+    <input
+            type="text"
+            name="title"
+            placeholder="Add a new task..."
+            required
+            class="flex-1 rounded-xl border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-sm"
+    >
+    <button
+            type="submit"
+            class="bg-indigo-500 text-white font-semibold px-5 py-2 rounded-xl hover:bg-indigo-600 transition"
+    >
+      Add
+    </button>
   </form>
-  <th:block th:each="task : ${tasks}">
-    <div>
-      <span th:text="${task.title}">Task Title </span>
-    </div>
-  </th:block>
+
+  <!-- Tasks List -->
+  <div class="space-y-3">
+    <th:block th:each="task : ${tasks}">
+      <div class="flex items-center justify-between bg-gray-50 border border-gray-200 px-4 py-2 rounded-xl shadow-sm hover:bg-gray-100 transition">
+        <span th:text="${task.title}" class="text-gray-700 font-medium">Task Title</span>
+      </div>
+    </th:block>
+  </div>
 </div>
 </body>
 </html>
