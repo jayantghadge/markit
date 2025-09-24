@@ -5,23 +5,23 @@
   <meta charset="UTF-8">
   <title>MarkIt</title>
 </head>
-<body class="bg-gradient-to-r from-blue-500 to-indigo-600 min-h-screen flex items-center justify-center font-sans">
-<div class="bg-white shadow-xl rounded-2xl p-8 w-full max-w-md">
-  <!-- Title -->
-  <h1 class="text-3xl font-bold text-gray-800 mb-6 text-center">MarkIt</h1>
+<body class="bg-gradient-to-r from-blue-400 to-indigo-800 min-h-screen flex items-center justify-center font-sans">
+<div class="bg-white shadow-2xl rounded-2xl p-8 w-full max-w-md">
 
-  <!-- Form -->
-  <form action="/" method="post" class="flex space-x-2 mb-6">
+  <h1 class="text-3xl font-bold text-blue-600 mb-6 text-center">MarkIt</h1>
+
+<!-- Form-->
+  <form action="/" method="post" class="flex gap-3 mb-6">
     <input
             type="text"
             name="title"
             placeholder="Add a new task..."
             required
-            class="flex-1 rounded-xl border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-sm"
+            class="flex-1 rounded-xl border border-gray-300 px-4 py-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-sm"
     >
     <button
             type="submit"
-            class="bg-indigo-500 text-white font-semibold px-5 py-2 rounded-xl hover:bg-indigo-600 transition"
+            class="shrink-0 bg-indigo-600 text-white font-semibold px-6 py-3 rounded-xl shadow-md hover:bg-indigo-700 active:scale-95 transition text-lg"
     >
       Add
     </button>
@@ -30,8 +30,29 @@
   <!-- Tasks List -->
   <div class="space-y-3">
     <th:block th:each="task : ${tasks}">
-      <div class="flex items-center justify-between bg-gray-50 border border-gray-200 px-4 py-2 rounded-xl shadow-sm hover:bg-gray-100 transition">
-        <span th:text="${task.title}" class="text-gray-700 font-medium">Task Title</span>
+      <div class="flex items-center justify-between bg-gray-50 border border-gray-200 px-4 py-3 rounded-xl shadow-sm hover:bg-gray-100 transition">
+
+        <span
+                th:classappend="${task.completed} ? 'line-through text-gray-400' : ''"
+                th:text="${task.title}"
+                class="text-gray-700 font-medium truncate">
+            Task Title
+          </span>
+
+        <div class="flex items-center gap-2 ml-4">
+          <a
+                  th:href="@{/{id}/toggle(id=${task.id})}"
+                  class="px-4 py-2 text-sm rounded-lg bg-green-500 text-white font-semibold shadow hover:bg-green-600 active:scale-95 transition"
+          >
+            Toggle
+          </a>
+          <a
+                  th:href="@{/{id}/delete(id=${task.id})}"
+                  class="px-4 py-2 text-sm rounded-lg bg-red-500 text-white font-semibold shadow hover:bg-red-600 active:scale-95 transition"
+          >
+            Delete
+          </a>
+        </div>
       </div>
     </th:block>
   </div>
