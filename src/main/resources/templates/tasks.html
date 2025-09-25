@@ -4,24 +4,50 @@
   <link rel="stylesheet" th:href="@{/css/style.build.tailwind.css}">
   <meta charset="UTF-8">
   <title>MarkIt</title>
+  <style>
+    :root {
+      /* Light theme  */
+      --bg-start: #62a0f6;
+      --bg-end: #4b42c3;
+      --card-bg: #ffffff;
+      --text-color: #6366f2;
+      --input-bg: #f9fafb;
+      --input-border: #d1d5db;
+      --toggle-bg: #10b981;
+      --delete-bg: #ef4444;
+      --button-bg: #4f46e5;
+    }
+  </style>
 </head>
-<body class="bg-gradient-to-r from-blue-400 to-indigo-800 min-h-screen flex items-center justify-center font-sans">
-<div class="bg-white shadow-2xl rounded-2xl p-8  w-2/3">
+<body style="background: linear-gradient(to right, var(--bg-start), var(--bg-end)); color: var(--text-color);" class="min-h-screen flex items-center justify-center font-sans px-2 sm:px-4">
+<div style="background-color: var(--card-bg);" class="shadow-2xl rounded-2xl p-6 sm:p-8 w-full max-w-lg sm:max-w-md lg:max-w-xl transition-colors duration-300">
 
-  <h1 class="text-3xl font-bold text-blue-600 mb-6 text-center">MarkIt</h1>
+  <!-- Header with Toggle -->
+  <div class="flex justify-between items-center mb-6">
+    <h1 style="" class="text-3xl font-bold">MarkIt</h1>
+    <button
+            id="theme-toggle"
+            class="px-3 py-2 rounded-lg shadow hover:opacity-80 transition"
+            style="background-color: var(--input-bg); color: var(--text-color);"
+    >
 
-<!-- Form-->
-  <form action="/" method="post" class="flex gap-3 mb-6">
+    </button>
+  </div>
+
+  <!-- Form -->
+  <form action="/" method="post" class="flex flex-col sm:flex-row gap-3 mb-6">
     <input
             type="text"
             name="title"
             placeholder="Add a new task..."
             required
-            class="flex-1 rounded-xl border border-gray-300 px-4 py-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-sm"
+            class="flex-1 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 shadow-sm"
+            style="background-color: var(--input-bg); border: 1px solid var(--input-border); color: var(--text-color);"
     >
     <button
             type="submit"
-            class="shrink-0 bg-indigo-600 text-white font-semibold px-6 py-3 rounded-xl shadow-md hover:bg-indigo-700 active:scale-95 transition text-lg"
+            class="font-semibold px-6 py-3 rounded-xl shadow-md hover:opacity-80 transition text-lg w-full sm:w-auto"
+            style="background-color: var(--button-bg); color: white;"
     >
       Add
     </button>
@@ -30,26 +56,25 @@
   <!-- Tasks List -->
   <div class="space-y-3">
     <th:block th:each="task : ${tasks}">
-      <div class="flex items-center justify-between bg-gray-50 border border-gray-200 px-4 py-3 rounded-xl shadow-sm hover:bg-gray-100 transition">
+      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between px-4 py-3 rounded-xl shadow-sm hover:opacity-90 transition"
+           style="background-color: var(--input-bg); color: var(--text-color); border: 1px solid var(--input-border);">
 
         <span
                 th:classappend="${task.completed} ? 'line-through text-gray-400' : ''"
                 th:text="${task.title}"
-                class="text-gray-700 font-medium truncate">
-            Task Title
-          </span>
+                class="font-medium truncate mb-3 sm:mb-0">
+          Task Title
+        </span>
 
-        <div class="flex items-center gap-2 ml-4">
-          <a
-                  th:href="@{/{id}/toggle(id=${task.id})}"
-                  class="px-4 py-2 text-sm rounded-lg bg-green-500 text-white font-semibold shadow hover:bg-green-600 active:scale-95 transition"
-          >
+        <div class="flex gap-2 w-full sm:w-auto">
+          <a th:href="@{/{id}/toggle(id=${task.id})}"
+             class="flex-1 sm:flex-none px-4 py-2 text-sm rounded-lg font-semibold shadow hover:opacity-80 transition text-center"
+             style="background-color: var(--toggle-bg); color: white;">
             Toggle
           </a>
-          <a
-                  th:href="@{/{id}/delete(id=${task.id})}"
-                  class="px-4 py-2 text-sm rounded-lg bg-red-500 text-white font-semibold shadow hover:bg-red-600 active:scale-95 transition"
-          >
+          <a th:href="@{/{id}/delete(id=${task.id})}"
+             class="flex-1 sm:flex-none px-4 py-2 text-sm rounded-lg font-semibold shadow hover:opacity-80 transition text-center"
+             style="background-color: var(--delete-bg); color: white;">
             Delete
           </a>
         </div>
@@ -57,5 +82,55 @@
     </th:block>
   </div>
 </div>
+
+<script>
+  const btn = document.getElementById('theme-toggle');
+
+  const lightVars = {
+    '--bg-start': '#62a0f6',
+    '--bg-end': '#4b42c3',
+    '--card-bg': '#ffffff',
+    '--text-color': '#374151',
+    '--input-bg': '#f9fafb',
+    '--input-border': '#d1d5db',
+    '--toggle-bg': '#10b981',
+    '--delete-bg': '#ef4444',
+    '--button-bg': '#4f46e5',
+  };
+
+  const darkVars = {
+    '--bg-start': '#111827',
+    '--bg-end': '#000000',
+    '--card-bg': '#1f2937',
+    '--text-color': '#e5e7eb',
+    '--input-bg': '#374151',
+    '--input-border': '#4b5563',
+    '--toggle-bg': '#22c55e',
+    '--delete-bg': '#ef4444',
+    '--button-bg': '#6366f1',
+  };
+
+  function applyTheme(vars) {
+    for (const key in vars) {
+      document.documentElement.style.setProperty(key, vars[key]);
+    }
+  }
+
+   applyTheme(darkVars);
+  localStorage.theme = 'dark';
+  btn.textContent = '☀️';
+
+  btn.addEventListener('click', () => {
+    if (localStorage.theme === 'dark') {
+      applyTheme(lightVars);
+      localStorage.theme = 'light';
+      btn.textContent = '🌙';
+    } else {
+      applyTheme(darkVars);
+      localStorage.theme = 'dark';
+      btn.textContent = '☀️';
+    }
+  });
+</script>
 </body>
 </html>
