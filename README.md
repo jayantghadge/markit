@@ -12,6 +12,7 @@ Markit is a Spring Boot project that shows how to connect a Java app to a MySQL 
 - Spring Data JPA
 - Thymeleaf
 - MySQL
+- Tailwind V4
 
 ## Tools Used
 - Maven (build and dependency management)
