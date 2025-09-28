@@ -4,10 +4,12 @@ package com.app.markit.controller;
 
 import com.app.markit.models.Task;
 import com.app.markit.services.TaskService;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Controller
@@ -29,8 +31,11 @@ public class TaskController {
     }
 
     @PostMapping
-    public String createTask(@RequestParam String title){
-        taskService.createTask(title);
+    public String createTask(@RequestParam String title,
+                             @RequestParam(required = false) String description,
+                             @RequestParam(required = false) String priority,
+                             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dueDate){
+        taskService.createTask(title, description, priority, dueDate);
         return "redirect:/";
     }
 

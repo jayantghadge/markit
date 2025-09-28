@@ -5,6 +5,7 @@ import com.app.markit.models.Task;
 import com.app.markit.repository.TaskRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -20,10 +21,13 @@ public class TaskService {
         return taskRepository.findAll();
     }
 
-    public void createTask(String title) {
+    public void createTask(String title, String description, String priority, LocalDate dueDate) {
         Task task = new Task();
         task.setTitle(title);
         task.setCompleted(false);
+        task.setDescription(description);
+        task.setPriority(priority);
+        task.setDueDate(dueDate);
         taskRepository.save(task);
     }
 

@@ -24,26 +24,46 @@
 
   <!-- Header with Toggle -->
   <div class="flex justify-between items-center mb-6">
-    <h1 style="" class="text-3xl font-bold">MarkIt</h1>
+    <h1 class="text-3xl font-bold text-center w-full absolute left-0 right-0">MarkIt</h1>
     <button
             id="theme-toggle"
             class="px-3 py-2 rounded-lg shadow hover:opacity-80 transition"
             style="background-color: var(--input-bg); color: var(--text-color);"
-    >
-
-    </button>
+    ></button>
   </div>
 
-  <!-- Form -->
-  <form action="/" method="post" class="flex flex-col sm:flex-row gap-3 mb-6">
+  <form action="/" method="post" class="flex flex-col gap-3 mb-6">
     <input
             type="text"
             name="title"
-            placeholder="Add a new task..."
+            placeholder="Task title..."
             required
-            class="flex-1 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 shadow-sm"
+            class="rounded-xl px-4 py-3 focus:outline-none focus:ring-2 shadow-sm"
             style="background-color: var(--input-bg); border: 1px solid var(--input-border); color: var(--text-color);"
     >
+    <input
+            type="text"
+            name="description"
+            placeholder="Description (optional)"
+            class="rounded-xl px-4 py-3 focus:outline-none focus:ring-2 shadow-sm"
+            style="background-color: var(--input-bg); border: 1px solid var(--input-border); color: var(--text-color);"
+    >
+    <select
+            name="priority"
+            class="rounded-xl px-4 py-3 focus:outline-none focus:ring-2 shadow-sm"
+            style="background-color: var(--input-bg); border: 1px solid var(--input-border); color: var(--text-color);"
+    >
+      <option value="Low">Low</option>
+      <option value="Medium">Medium</option>
+      <option value="High">High</option>
+    </select>
+    <input
+            type="date"
+            name="dueDate"
+            class="rounded-xl px-4 py-3 focus:outline-none focus:ring-2 shadow-sm"
+            style="background-color: var(--input-bg); border: 1px solid var(--input-border); color: var(--text-color);"
+    >
+
     <button
             type="submit"
             class="font-semibold px-6 py-3 rounded-xl shadow-md hover:opacity-80 transition text-lg w-full sm:w-auto"
@@ -59,18 +79,20 @@
       <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between px-4 py-3 rounded-xl shadow-sm hover:opacity-90 transition"
            style="background-color: var(--input-bg); color: var(--text-color); border: 1px solid var(--input-border);">
 
-        <span
-                th:classappend="${task.completed} ? 'line-through text-gray-400' : ''"
-                th:text="${task.title}"
-                class="font-medium truncate mb-3 sm:mb-0">
-          Task Title
-        </span>
+        <div class="flex-1 mb-3 sm:mb-0">
+          <span th:classappend="${task.completed} ? 'line-through text-gray-400' : ''"
+                th:text="${task.title}" class="font-medium truncate block">Task Title</span>
+          <span th:text="${task.description}" class="block text-sm text-gray-500 truncate">Description</span>
+          <span th:text="'Priority: ' + ${task.priority}" class="block text-sm text-gray-500">Priority</span>
+          <span th:text="'Due: ' + ${task.dueDate}" class="block text-sm text-gray-500">Due Date</span>
+          <span th:text="'Created: ' + ${task.createdAt}" class="block text-xs text-gray-400">Created Date</span>
+        </div>
 
         <div class="flex gap-2 w-full sm:w-auto">
           <a th:href="@{/{id}/toggle(id=${task.id})}"
+             th:text="${task.completed} ? 'Undo' : 'Mark as Done'"
              class="flex-1 sm:flex-none px-4 py-2 text-sm rounded-lg font-semibold shadow hover:opacity-80 transition text-center"
              style="background-color: var(--toggle-bg); color: white;">
-            Toggle
           </a>
           <a th:href="@{/{id}/delete(id=${task.id})}"
              class="flex-1 sm:flex-none px-4 py-2 text-sm rounded-lg font-semibold shadow hover:opacity-80 transition text-center"
@@ -110,15 +132,20 @@
     '--button-bg': '#6366f1',
   };
 
+  // Apply theme based on localStorage
+  if(localStorage.theme === 'light') {
+    applyTheme(lightVars);
+    btn.textContent = '🌙';
+  } else {
+    applyTheme(darkVars);
+    btn.textContent = '☀️';
+  }
+
   function applyTheme(vars) {
     for (const key in vars) {
       document.documentElement.style.setProperty(key, vars[key]);
     }
   }
-
-   applyTheme(darkVars);
-  localStorage.theme = 'dark';
-  btn.textContent = '☀️';
 
   btn.addEventListener('click', () => {
     if (localStorage.theme === 'dark') {
